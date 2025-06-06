@@ -22,7 +22,7 @@ Parser::Parser(Scanner& scanner, std::shared_ptr<Error> errorPtr) :
 
 void Parser::compile()
 {
-    table.openScope(); // Блок стандартных идентификаторов
+    table.openScope(); // ГЃГ«Г®ГЄ Г±ГІГ Г­Г¤Г Г°ГІГ­Г»Гµ ГЁГ¤ГҐГ­ГІГЁГґГЁГЄГ ГІГ®Г°Г®Гў
     table.addItem(table.functionItem("ABS", Item::ItemTypes::Integer));
     table.addItem(table.functionItem("MIN", Item::ItemTypes::Integer));
     table.addItem(table.functionItem("MAX", Item::ItemTypes::Integer));
@@ -38,7 +38,7 @@ void Parser::compile()
 
     table.addItem(table.typeItem("INTEGER", Item::ItemTypes::Integer));
 
-    table.openScope(); // Блок модуля
+    table.openScope(); // ГЃГ«Г®ГЄ Г¬Г®Г¤ГіГ«Гї
 
     modulePrc();
 
@@ -49,12 +49,12 @@ void Parser::compile()
     generateCode.runCode();
 }
 
-// MODULE Имя ";"
-// [Импорт]
-// ПослОбъявл
+// MODULE Г€Г¬Гї ";"
+// [Г€Г¬ГЇГ®Г°ГІ]
+// ГЏГ®Г±Г«ГЋГЎГєГїГўГ«
 // [BEGIN
-//   ПослОператоров]
-// END Имя "."
+//   ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў]
+// END Г€Г¬Гї "."
 void Parser::modulePrc()
 {
     checkLex(Scanner::Lex::MODULE);
@@ -69,8 +69,8 @@ void Parser::modulePrc()
 
     if (scanner.lex == Scanner::Lex::IMPORT)
     {
-        // IMPORT опциональный
-        // распознающая процедура для нетерминала IMPORT
+        // IMPORT Г®ГЇГ¶ГЁГ®Г­Г Г«ГјГ­Г»Г©
+        // Г°Г Г±ГЇГ®Г§Г­Г ГѕГ№Г Гї ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г  Г¤Г«Гї Г­ГҐГІГҐГ°Г¬ГЁГ­Г Г«Г  IMPORT
         importPrc();
     }
 
@@ -89,11 +89,11 @@ void Parser::modulePrc()
     Item* item = table.findItem(scanner.nameValue);
     if (item->typeOfItem != "module")
     {
-        errorPtr->syntaxError("имя модуля");
+        errorPtr->syntaxError("ГЁГ¬Гї Г¬Г®Г¤ГіГ«Гї");
     }
     else if (item->name != moduleName)
     {
-        errorPtr->syntaxError("имя модуля " + scanner.nameValue);
+        errorPtr->syntaxError("ГЁГ¬Гї Г¬Г®Г¤ГіГ«Гї " + scanner.nameValue);
     }
 
     scanner.nextLex();
@@ -111,16 +111,16 @@ void Parser::loccateVariables()
     {
         if (std::stoi(var.addr) > 0) {
             generateCode.fillGaps(std::stoi(var.addr));
-            generateCode.gen(0); // Увеличили cmdCounter на 1
+            generateCode.gen(0); // Г“ГўГҐГ«ГЁГ·ГЁГ«ГЁ cmdCounter Г­Г  1
         }
         else
         {
-            std::cout << "Переменна `" << var.name << "` объявлена, но не используется" << std::endl;
+            std::cout << "ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г  `" << var.name << "` Г®ГЎГєГїГўГ«ГҐГ­Г , Г­Г® Г­ГҐ ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГІГ±Гї" << std::endl;
         }
     }
 }
 
-// IMPORT Имя {"," Имя} ";".
+// IMPORT Г€Г¬Гї {"," Г€Г¬Гї} ";".
 void Parser::importPrc()
 {
     checkLex(Scanner::Lex::IMPORT);
@@ -176,7 +176,7 @@ int Parser::constExpresionPrc()
 {
     int sign = 1;
 
-    // не проверяем деление на 0, переполнение и тп
+    // Г­ГҐ ГЇГ°Г®ГўГҐГ°ГїГҐГ¬ Г¤ГҐГ«ГҐГ­ГЁГҐ Г­Г  0, ГЇГҐГ°ГҐГЇГ®Г«Г­ГҐГ­ГЁГҐ ГЁ ГІГЇ
     if (scanner.lex == Scanner::Lex::MINUS)
     {
         checkLex(Scanner::Lex::MINUS);
@@ -194,7 +194,7 @@ int Parser::constExpresionPrc()
         checkLex(Scanner::Lex::NAME);
         if (item->typeOfItem != "const")
         {
-            errorPtr->contextError("имя модуля");
+            errorPtr->contextError("ГЁГ¬Гї Г¬Г®Г¤ГіГ«Гї");
         }
         else
         {
@@ -209,7 +209,7 @@ int Parser::constExpresionPrc()
     }
     else
     {
-        errorPtr->syntaxError("имя константы или число");
+        errorPtr->syntaxError("ГЁГ¬Гї ГЄГ®Г­Г±ГІГ Г­ГІГ» ГЁГ«ГЁ Г·ГЁГ±Г«Г®");
     }
 }
 
@@ -235,7 +235,7 @@ void Parser::typePrc()
 
     if (item->typeOfItem != "type")
     {
-        errorPtr->contextError("Необьявленное имя типа");
+        errorPtr->contextError("ГЌГҐГ®ГЎГјГїГўГ«ГҐГ­Г­Г®ГҐ ГЁГ¬Гї ГІГЁГЇГ ");
     }
 
     scanner.nextLex();
@@ -252,17 +252,17 @@ void Parser::sequenceStatementsPrc()
 }
 
 // [
-//   Переменная ":=" Выраж
-//   | [Имя "."] Имя ["(" Параметр {"," Параметр}] ")"]
-//   | IF Выраж THEN
-//     ПослОператоров
-//   {ELSIF Выраж THEN
-//     ПослОператоров}
+//   ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г Гї ":=" Г‚Г»Г°Г Г¦
+//   | [Г€Г¬Гї "."] Г€Г¬Гї ["(" ГЏГ Г°Г Г¬ГҐГІГ° {"," ГЏГ Г°Г Г¬ГҐГІГ°}] ")"]
+//   | IF Г‚Г»Г°Г Г¦ THEN
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў
+//   {ELSIF Г‚Г»Г°Г Г¦ THEN
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў}
 //   [ELSE
-//     ПослОператоров]
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў]
 //    END
-//   | WHILE Выраж DO
-//     ПослОператоров
+//   | WHILE Г‚Г»Г°Г Г¦ DO
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў
 //   END
 // ]
 void Parser::statementsPrc()
@@ -287,8 +287,8 @@ void Parser::statementsPrc()
     }
 }
 
-//   Переменная ":=" Выраж
-//   | [Имя "."] Имя ["(" Параметр {"," Параметр}] ")"]
+//   ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г Гї ":=" Г‚Г»Г°Г Г¦
+//   | [Г€Г¬Гї "."] Г€Г¬Гї ["(" ГЏГ Г°Г Г¬ГҐГІГ° {"," ГЏГ Г°Г Г¬ГҐГІГ°}] ")"]
 void Parser::variableOrCallPrc()
 {
     errorIfNotExpectedLex(Scanner::Lex::NAME);
@@ -302,7 +302,7 @@ void Parser::variableOrCallPrc()
         Item::ItemTypes expressionType = expressionPrc();
         if (item->type != expressionType)
         {
-            errorPtr->contextError("Неверный тип при присваивании");
+            errorPtr->contextError("ГЌГҐГўГҐГ°Г­Г»Г© ГІГЁГЇ ГЇГ°ГЁ ГЇГ°ГЁГ±ГўГ ГЁГўГ Г­ГЁГЁ");
         }
         generateCode.genSave();
     }
@@ -312,7 +312,7 @@ void Parser::variableOrCallPrc()
         {
             if (item->typeOfItem != "module")
             {
-                errorPtr->contextError("Ожидается имя модуля");
+                errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї ГЁГ¬Гї Г¬Г®Г¤ГіГ«Гї");
             }
             scanner.nextLex();
             // checkLex(Scanner::Lex::NAME);
@@ -321,13 +321,13 @@ void Parser::variableOrCallPrc()
             item = table.findItem(procedureName);
             if (item->typeOfItem != "procedure")
             {
-                errorPtr->contextError("Ожидается процедура");
+                errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г ");
             }
             scanner.nextLex();
         }
         else if (item->typeOfItem != "procedure")
         {
-            errorPtr->contextError("Ожидается имя процедуры");
+            errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї ГЁГ¬Гї ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г»");
         }
 
         if (scanner.lex == Scanner::Lex::LPAR)
@@ -342,22 +342,22 @@ void Parser::variableOrCallPrc()
         }
         else if (item->name != "Out.Ln" && item->name != "In.Open")
         {
-            errorPtr->contextError("Ожидается скобка");
+            errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї Г±ГЄГ®ГЎГЄГ ");
         }
 
     }
     else
     {
-        errorPtr->contextError("Ожидается имя перменной или процедуры");
+        errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї ГЁГ¬Гї ГЇГҐГ°Г¬ГҐГ­Г­Г®Г© ГЁГ«ГЁ ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г»");
     }
 }
 
-//   IF Выраж THEN
-//     ПослОператоров
-//   {ELSIF Выраж THEN
-//     ПослОператоров}
+//   IF Г‚Г»Г°Г Г¦ THEN
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў
+//   {ELSIF Г‚Г»Г°Г Г¦ THEN
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў}
 //   [ELSE
-//     ПослОператоров]
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў]
 //    END
 void Parser::ifStatementPrc()
 {
@@ -395,8 +395,8 @@ void Parser::ifStatementPrc()
     generateCode.fillGaps(lastGoToPosition);
 }
 
-//   WHILE Выраж DO
-//     ПослОператоров
+//   WHILE Г‚Г»Г°Г Г¦ DO
+//     ГЏГ®Г±Г«ГЋГЇГҐГ°Г ГІГ®Г°Г®Гў
 //   END
 void Parser::whileStatementPrc()
 {
@@ -421,7 +421,7 @@ void Parser::forStatementPrc() {
         errorIfNotExpectedLex(Scanner::Lex::NAME);
         Item* varItem = table.findItem(scanner.nameValue);
         if (varItem->typeOfItem != "var" || varItem->type != Item::ItemTypes::Integer)
-            errorPtr->contextError("Ожидается целочисленная переменная");
+            errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї Г¶ГҐГ«Г®Г·ГЁГ±Г«ГҐГ­Г­Г Гї ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г Гї");
 
         scanner.nextLex();
         checkLex(Scanner::Lex::ASS);
@@ -497,13 +497,13 @@ void Parser::forStatementPrc() {
         if (stepValue < 0) {
             generateCode.genAddress(*varItem);
             generateCode.genLoad();
-            generateCode.gen(1);
+            generateCode.gen(fabs(stepValue));
             generateCode.gen(OVM::ADD);
         }
         else {
             generateCode.genAddress(*varItem);
             generateCode.genLoad();
-            generateCode.gen(1);
+            generateCode.gen(stepValue);
             generateCode.gen(OVM::SUB);
         }
         generateCode.genSave();
@@ -520,14 +520,14 @@ void Parser::repeatStatementPrc() {
     generateCode.genGoTo(repeatPosition);
     generateCode.fillGaps(conditionPosition);
 }
-// Параметр | Выражение
-// Пока нет контекстного анализатора
+// ГЏГ Г°Г Г¬ГҐГІГ° | Г‚Г»Г°Г Г¦ГҐГ­ГЁГҐ
+// ГЏГ®ГЄГ  Г­ГҐГІ ГЄГ®Г­ГІГҐГЄГ±ГІГ­Г®ГЈГ® Г Г­Г Г«ГЁГ§Г ГІГ®Г°Г 
 void Parser::parameterPrc()
 {
     expressionPrc();
 }
 
-// ПростоеВыраж [Отношение ПростоеВыраж]
+// ГЏГ°Г®Г±ГІГ®ГҐГ‚Г»Г°Г Г¦ [ГЋГІГ­Г®ГёГҐГ­ГЁГҐ ГЏГ°Г®Г±ГІГ®ГҐГ‚Г»Г°Г Г¦]
 Item::ItemTypes Parser::expressionPrc()
 {
     Item::ItemTypes simpleExpressionType = simpleExpressionPrc();
@@ -579,7 +579,7 @@ Item::ItemTypes Parser::NEGexpressionPrc()
 }
 
 
-// ["+"|"-"] Слагаемое {ОперСлож Слагаемое}.
+// ["+"|"-"] Г‘Г«Г ГЈГ ГҐГ¬Г®ГҐ {ГЋГЇГҐГ°Г‘Г«Г®Г¦ Г‘Г«Г ГЈГ ГҐГ¬Г®ГҐ}.
 Item::ItemTypes Parser::simpleExpressionPrc()
 {
     Item::ItemTypes termType;
@@ -626,7 +626,7 @@ Item::ItemTypes Parser::simpleExpressionPrc()
     return termType;
 }
 
-// Множитель {ОперацияУмножения Множитель}
+// ГЊГ­Г®Г¦ГЁГІГҐГ«Гј {ГЋГЇГҐГ°Г Г¶ГЁГїГ“Г¬Г­Г®Г¦ГҐГ­ГЁГї ГЊГ­Г®Г¦ГЁГІГҐГ«Гј}
 Item::ItemTypes Parser::termPrc()
 {
     Item::ItemTypes multiplierType;
@@ -653,9 +653,9 @@ Item::ItemTypes Parser::termPrc()
     return multiplierType;
 }
 
-// Имя ["(" Выраж | Тип ")"]
-// | Число
-// | "(" Выраж ")".
+// Г€Г¬Гї ["(" Г‚Г»Г°Г Г¦ | Г’ГЁГЇ ")"]
+// | Г—ГЁГ±Г«Г®
+// | "(" Г‚Г»Г°Г Г¦ ")".
 Item::ItemTypes Parser::multiplierPrc()
 {
     if (scanner.lex == Scanner::Lex::NAME)
@@ -683,7 +683,7 @@ Item::ItemTypes Parser::multiplierPrc()
         }
         else
         {
-            errorPtr->contextError("Ожидается константа, имя или функция");
+            errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї ГЄГ®Г­Г±ГІГ Г­ГІГ , ГЁГ¬Гї ГЁГ«ГЁ ГґГіГ­ГЄГ¶ГЁГї");
         }
     }
     else if (scanner.lex == Scanner::Lex::NUM)
@@ -701,10 +701,10 @@ Item::ItemTypes Parser::multiplierPrc()
     }
     else
     {
-        errorPtr->syntaxError("Имя, число или '('");
+        errorPtr->syntaxError("Г€Г¬Гї, Г·ГЁГ±Г«Г® ГЁГ«ГЁ '('");
     }
 
-    // заглушка !!!!
+    // Г§Г ГЈГ«ГіГёГЄГ  !!!!
     return Item::ItemTypes::Integer;
 }
 
@@ -717,7 +717,7 @@ void Parser::contextImportPrc()
     }
     else
     {
-        errorPtr->contextError("Ожидается модуль `In` или `Out`");
+        errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї Г¬Г®Г¤ГіГ«Гј `In` ГЁГ«ГЁ `Out`");
     }
 
     scanner.nextLex();
@@ -797,7 +797,7 @@ void Parser::checkProcParameters(Item item)
     }
     else
     {
-        errorPtr->contextError("Неизвестная процедура");
+        errorPtr->contextError("ГЌГҐГЁГ§ГўГҐГ±ГІГ­Г Гї ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г ");
     }
 }
 
@@ -827,7 +827,7 @@ void Parser::checkFuncParameters(Item item)
     }
     else
     {
-        errorPtr->contextError("Неизвестная функция");
+        errorPtr->contextError("ГЌГҐГЁГ§ГўГҐГ±ГІГ­Г Гї ГґГіГ­ГЄГ¶ГЁГї");
     }
 }
 
@@ -857,7 +857,7 @@ void Parser::checkIntType(Item::ItemTypes type)
 {
     if (type != Item::ItemTypes::Integer)
     {
-        errorPtr->contextError("Ожидается целый тип");
+        errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї Г¶ГҐГ«Г»Г© ГІГЁГЇ");
     }
 }
 
@@ -865,7 +865,7 @@ void Parser::checkBoolType(Item::ItemTypes type)
 {
     if (type != Item::ItemTypes::Boolean)
     {
-        errorPtr->contextError("Ожидается логический тип");
+        errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї Г«Г®ГЈГЁГ·ГҐГ±ГЄГЁГ© ГІГЁГЇ");
     }
 }
 
@@ -875,7 +875,7 @@ void Parser::errorIsNotVariable() {
 
     if (paramItem->typeOfItem != "var")
     {
-        errorPtr->contextError("Ожидается имя переменной");
+        errorPtr->contextError("ГЋГ¦ГЁГ¤Г ГҐГІГ±Гї ГЁГ¬Гї ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г®Г©");
     }
 
     generateCode.genAddress(*paramItem);
