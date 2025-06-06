@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Исходные файлы\error">
+      <UniqueIdentifier>{b4ce09cc-2be5-43e9-9e3f-9cff98f31e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\parser">
+      <UniqueIdentifier>{49182f3b-151a-4079-99d7-039f5c8b9797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\scanner">
+      <UniqueIdentifier>{39ab23d2-0a12-472b-ab70-ecfa3e5cb9eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\driver">
+      <UniqueIdentifier>{938ca91d-ce1d-4f47-8842-239a701360db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\table">
+      <UniqueIdentifier>{0d12a84b-1d72-45ba-a065-a96eeea61559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\virutal">
+      <UniqueIdentifier>{fe45cdb6-1c1a-4389-980f-39a76eec3d3c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="comiler.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Error.cpp">
+      <Filter>Исходные файлы\error</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.cpp">
+      <Filter>Исходные файлы\parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Scanner.cpp">
+      <Filter>Исходные файлы\scanner</Filter>
+    </ClCompile>
+    <ClCompile Include="Driver.cpp">
+      <Filter>Исходные файлы\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="TableOfName.cpp">
+      <Filter>Исходные файлы\table</Filter>
+    </ClCompile>
+    <ClCompile Include="generateCode.cpp">
+      <Filter>Исходные файлы\virutal</Filter>
+    </ClCompile>
+    <ClCompile Include="ovm.cpp">
+      <Filter>Исходные файлы\virutal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Error.h">
+      <Filter>Исходные файлы\error</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>Исходные файлы\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Scanner.h">
+      <Filter>Исходные файлы\scanner</Filter>
+    </ClInclude>
+    <ClInclude Include="Driver.h">
+      <Filter>Исходные файлы\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Исходные файлы\table</Filter>
+    </ClInclude>
+    <ClInclude Include="TableOfName.h">
+      <Filter>Исходные файлы\table</Filter>
+    </ClInclude>
+    <ClInclude Include="generateCode.h">
+      <Filter>Исходные файлы\virutal</Filter>
+    </ClInclude>
+    <ClInclude Include="ovm.h">
+      <Filter>Исходные файлы\virutal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="program.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

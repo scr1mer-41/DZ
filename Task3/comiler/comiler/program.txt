@@ -1,0 +1,11 @@
+MODULE Primes;
+IMPORT
+   Out, In;
+VAR
+   i, n: INTEGER;
+BEGIN
+	FOR i := 1 TO 3 BY 1 DO
+		Out.Int(i,0);
+	END;
+	Out.Int(i,0); 
+END Primes.
